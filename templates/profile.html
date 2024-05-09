@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الصفحة الشخصية</title>
+    <link rel="stylesheet" href="style/prof.css">
+</head>
+<body>
+    
+    <img src="images/bg.png" alt="" class="bg">
+
+    <div class="up">
+        <img src="images/user.png" alt="">
+        <div class="text">
+            <p>Radwan Gaber</p>
+            <p>radwangaber@gmail.com</p>
+            <a href="#">تسجيل الخروج</a>
+        </div>
+    </div>
+ 
+
+    <div class="overlay">
+        <p class="cancel">X</p>
+        <img src="images/user.png" alt="">
+    </div>
+
+    <div class="container">
+        <div class="btns">
+            <a href="#" data-tabid="orders" >جميع الاوردرات</a>
+            <a href="#" data-tabid="order" class="active">اطلب الاوردر</a>
+        </div>
+
+        <div class="tab" id="order">
+            <select name="cafateria" id="">
+                <option value="#" selected>اختر الكافتريا</option>
+            </select>
+            
+            <select name="product" id="">
+                <option value="#">اختر الطلب</option>
+            </select>
+    
+            <button >أطلب الان</button>
+        </div>
+
+        <div class="tab" id="orders">
+            
+            <div class="or">
+                <button data-qrpath="images/bg.png">عرض الكود</button>
+                <div class="details">
+                    <p>الكافتيريا : علوم</p>
+                    <p>السعر : 30 ج</p>
+                    <p>الطلب : كريب بطاطس </p>
+                </div>
+            </div>
+
+                        
+            <div class="or">
+                <button data-qrpath="images/user.png">عرض الكود</button>
+                <div class="details">
+                    <p>الكافتيريا : علوم</p>
+                    <p>السعر : 30 ج</p>
+                    <p>الطلب : كريب بطاطس </p>
+                </div>
+            </div>
+            
+        </div>
+
+
+
+    </div>
+
+    
+
+    <!-- view qr code  -->
+    <script>
+        var qr_btns = document.querySelectorAll('.or button');
+        var overlay = document.querySelector('.overlay');
+        var cancelBtn = overlay.querySelector('.cancel');
+        qr_btns.forEach(b=>{
+            b.addEventListener('click',()=>{
+                var img_path = b.dataset.qrpath;
+                overlay.classList.add('view');
+                overlay.querySelector('img').src = img_path;
+                console.log(b)
+            })
+        })
+
+        cancelBtn.addEventListener('click',()=>{
+            overlay.classList.remove('view');
+        })
+    </script>
+
+     <!-- change between tabs -->
+     <script>
+        var btns = document.querySelectorAll('.btns a');
+        btns.forEach(btn=>{
+            btn.addEventListener('click',()=>{
+                btns.forEach(b=>b.classList.remove('active'));
+                btn.classList.add('active')
+                var current_tabname = btn.dataset.tabid; 
+                ChangeTab(current_tabname)
+            })
+        })
+
+        function ChangeTab(tab_id){
+            var tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab=>tab.classList.remove('view'));
+            document.getElementById(tab_id).classList.add('view')
+        }
+
+        ChangeTab('order')
+     </script>
+
+</body>
+</html>

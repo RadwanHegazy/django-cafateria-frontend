@@ -1,0 +1,108 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --var-font:"Cairo",sans-serif;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+
+body img.bg {
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.container {
+    background-color: #fff;
+    width: 400px;
+    height: auto;
+    padding: 1.2rem 2rem;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.container .img-cont {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container .img-cont button{
+    width: 60px;
+    height: 30px;
+    background-color: #26ABF1;
+    font-family: var(--var-font);
+    border: none;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.container .img-cont img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: contain;
+}
+
+.container .in {
+    display: flex;
+    flex-direction: column;
+    direction: rtl;
+}
+
+.container .in p {
+    font-family: var(--var-font);
+    font-size: 13px;
+    font-weight: bold;
+    color: #999;
+}
+
+.container .in input {
+    height: 45px;
+    border: none;
+    outline: none;
+    background-color: #9999993a;
+    padding: 1.1rem .4rem;
+    border-radius: 6px;
+}
+
+.container .btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.container .btns button {
+    width: 100px;
+    height: 50px;
+    border: none;
+    border-radius: 12px;
+    font-family: var(--var-font);
+    color: #fff;
+    background-color: #0EF28F;
+    cursor: pointer;
+}
+
+.container .btns a {
+    font-family: var(--var-font);
+    color: #0086FF;
+}
