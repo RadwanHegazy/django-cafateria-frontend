@@ -23,4 +23,5 @@ urlpatterns = [
     path('auth/login/',login.login_view.as_view(),name='login'),
     path('auth/register',register.register_view.as_view(),name='register'),
     path('auth/logout/',logout.logout_view.as_view(),name='logout'),
+    path('qr/scan/',profile.scan_view.as_view(),name='scan'),
 ]

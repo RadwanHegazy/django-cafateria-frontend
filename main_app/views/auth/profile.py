@@ -43,18 +43,6 @@ class profile_view (View) :
 
     @login_required
     def post(self, request, **kwargs) : 
-        if kwargs['user']['has_cafateria'] :
-            # post as a cafateria
-            self.scan_qr_code(request,**kwargs)
-        else:
-            # post as a normal user
-            self.post_as_user(request,**kwargs)
-
-
-        return redirect('profile')
-
-    @staticmethod
-    def post_as_user (request,**kwargs):
         action = Action(
             url=MAIN_URL + "/order/create/",
             headers=kwargs['headers'],
@@ -66,10 +54,16 @@ class profile_view (View) :
 
         action.post()
         messages.success(request,'جاري تحضير طلبك')
+
+
+        return redirect('profile')
+
         
 
-    @staticmethod
-    def scan_qr_code (request,**kwargs) :
+class scan_view (View) : 
+    
+    @login_required
+    def post (self,request,**kwargs) : 
         qr_code = request.POST.get('qr_id',None)
         action = Action(
             url = MAIN_URL + f"/order/scan/{qr_code}/",
@@ -80,8 +74,9 @@ class profile_view (View) :
 
         action.json_data()
         data = action.json_data()
-
+        
         if action.is_valid() :
             messages.success(request,f"الاوردر الخاص ب : {data['user']}  و الطلب : {data['order']} و السعر سيكون : {data['price']}")
         else:
             messages.error(request,'الكود غير صحيح')
+        return redirect('profile')
