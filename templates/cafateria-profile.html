@@ -24,7 +24,7 @@
     </div>
  
 
-    <form action="." method="POST" hidden>
+    <form action="{% url 'scan' %}" method="POST" hidden>
         {% csrf_token %}
         <input type="text" name="qr_id" value="123" id="qr_val">
     </form>
