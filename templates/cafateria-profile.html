@@ -1,46 +1,98 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الصفحة الشخصية</title>
-    <link rel="stylesheet" href="style/prof.css">
+    <link rel="stylesheet" href="{% static 'style/prof.css' %}">
 </head>
 <body>
     
-    <img src="images/bg.png" alt="" class="bg">
+    {% for msg in messages %}
+        <script>alert("{{msg}}")</script>
+    {% endfor %}
+    
+    <img src="{% static 'images/bg.png' %}" alt="" class="bg">
 
     <div class="up">
         <div class="text">
-            <h1>كافتيريا علوم</h1>
+            <h1>كافتيريا {{c_user.cafateria.name}} </h1>
             <button class="scan">قرائة الكود</button>
-            <a href="#">تسجيل الخروج</a>
+            <a href="{% url 'logout' %}">تسجيل الخروج</a>
         </div>
     </div>
  
 
+    <form action="." method="POST" hidden>
+        {% csrf_token %}
+        <input type="text" name="qr_id" value="123" id="qr_val">
+    </form>
+
+    <div class="qr_overlay">
+        <div id="my-qr-reader"></div>
+        <button type="submit" class="cancelQr">الغاء</button>
+    </div>
 
     <div class="container">
         
         <div class="btns">
-            <a href="#" data-tabid="orders" class="active">1 : جميع الاوردرات</a>
+            <a href="#" data-tabid="orders" class="active">{{orders.count}} : جميع الاوردرات</a>
         </div>
 
         <div class="tab view" id="orders">
             
-            <div class="or">
-                <p>السعر : 30 ج</p>
-                <p> الطلب : كريب بطاطس </p>
-            </div>
-
+            {% for order in orders.orders %}
+                <div class="or">
+                    <p>السعر : {{order.price}} ج</p>
+                    <p> الطلب : {{order.order_text}}  </p>
+                </div>
+            {% endfor %}
                     
         </div>
 
-
-
     </div>
 
-    
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <script>
+        var qr_overlay = document.querySelector('.qr_overlay');
+        var overlayBtn = document.querySelector('.up button');
+        var cancelBtn = document.querySelector('.cancelQr')
+
+        overlayBtn.addEventListener('click',()=>{
+            qr_overlay.classList.add('view');
+        })
+
+        cancelBtn.addEventListener('click',()=>{
+            qr_overlay.classList.remove('view');
+        })
+
+        function domReady(fn) {
+            if (document.readyState === "complete" || document.readyState === "interactive") {
+                setTimeout(fn, 1000);
+            } else {
+                document.addEventListener("DOMContentLoaded", fn);
+            }
+        }
+
+        domReady(function () {
+            function onScanSuccess(decodeText, decodeResult) {
+                var code_uuid = decodeText;
+                var qr_code_val = document.getElementById('qr_val');
+                qr_code_val.value = code_uuid;
+                document.querySelector('form').submit();
+            }
+
+            const htmlScanner = new Html5QrcodeScanner("my-qr-reader", {
+                fps: 10,
+                qrbos: 250
+            });
+
+            htmlScanner.render(onScanSuccess);
+        });
+
+
+    </script>
 
 </body>
 </html>

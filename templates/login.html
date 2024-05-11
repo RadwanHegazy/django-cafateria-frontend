@@ -1,36 +1,42 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تسجيل الدخول</title>
-    <link rel="stylesheet" href="style/auth.css">
+    <link rel="stylesheet" href="{% static 'style/auth.css' %}">
 </head>
 <body>
     
-    <img src="images/bg.png" alt="" class="bg">
+    <img src="{% static 'images/bg.png' %}" alt="" class="bg">
 
-    <div class="container">
- 
+    {% for msg in messages %}
+        <script>alert("{{msg}}")</script>
+    {% endfor %}
+
+    <form class="container" method="POST">
+
+        {% csrf_token %}
 
         <div class="in">
             <p>البريد الالكتروني</p>
-            <input type="email">
+            <input type="email" name="email">
         </div>
         
         <div class="in">
             <p>كلمة المرور</p>
-            <input type="password">
+            <input type="password" name="password">
         </div>
 
 
 
         <div class="btns">
-            <a href="#">انشاء حساب ؟</a>
-            <button>تسجيل</button>
+            <a href="{% url 'register' %}">انشاء حساب ؟</a>
+            <button type="submit">تسجيل</button>
         </div>
 
-    </div>
+    </form>
 
 
     

@@ -76,8 +76,13 @@ body img.bg {
     color: crimson;
 }
 
+select option {
+    background-color: #999;
+    color: #fff;
+}
+
 .container {
-    width: 500px;
+    min-width: 500px;
     background-color: #00000010;
     backdrop-filter: blur(30px);
     height: auto;
@@ -157,6 +162,7 @@ body img.bg {
     background-color: #FFFFFF23;
     padding: 1rem;
     border-radius: 12px;
+    gap: 10px;
     font-family: var(--var-font);
 }
 
@@ -216,4 +222,33 @@ body img.bg {
     width: 300px;
     height: auto;
     object-fit: contain;
+}
+
+.qr_overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 10;
+    width: 600px;
+    min-height: 400px;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 25px;
+    display: none;
+}
+
+.qr_overlay.view {
+    display: block;
+}
+
+.qr_overlay > button {
+    width: 100%;
+    padding: 6px 10px;
+    border: none;
+    outline: none;
+    background-color: crimson;
+    font-family: var(--var-font);
+    color: #fff;
+    cursor: pointer;
 }
