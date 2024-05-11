@@ -1,44 +1,46 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>انشاء حساب</title>
-    <link rel="stylesheet" href="style/auth.css">
+    <link rel="stylesheet" href="{% static 'style/auth.css' %}">
 </head>
 <body>
     
-    <img src="images/bg.png" alt="" class="bg">
+    <img src="{% static 'images/bg.png' %}" alt="" class="bg">
 
-    <div class="container">
+    <form class="container" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
         <div class="img-cont">
-            <img src="images/user.png" id="imgView" alt="">
+            <img src="{% static 'images/user.png' %}" id="imgView" alt="">
             <button type="button" id="imgBtn">تغير</button>
-            <input type="file" accept="image/*" id="imgInput" hidden>
+            <input type="file" accept="image/*" id="imgInput" hidden name="picture">
         </div>
 
         <div class="in">
             <p>اسم المستخدم</p>
-            <input type="text">
+            <input type="text" name="full_name">
         </div>
 
         <div class="in">
             <p>البريد الالكتروني</p>
-            <input type="email">
+            <input type="email" name="email">
         </div>
         
         <div class="in">
             <p>كلمة المرور</p>
-            <input type="password">
+            <input type="password" name="password">
         </div>
 
 
         <div class="btns">
-            <a href="#">تسجيل الدخول ؟</a>
-            <button>تسجيل</button>
+            <a href="{% url 'login' %}">تسجيل الدخول ؟</a>
+            <button type="submit">تسجيل</button>
         </div>
 
-    </div>
+    </form>
 
 
     <script>

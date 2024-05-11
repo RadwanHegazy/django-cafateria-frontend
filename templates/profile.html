@@ -1,68 +1,72 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الصفحة الشخصية</title>
-    <link rel="stylesheet" href="style/prof.css">
+    <link rel="stylesheet" href="{% static 'style/prof.css' %}">
 </head>
 <body>
+
+    {% for msg in messages %}
+        <script>alert("{{msg}}")</script>
+    {% endfor %}
     
-    <img src="images/bg.png" alt="" class="bg">
+    <img src="{% static 'images/bg.png' %}" alt="" class="bg">
 
     <div class="up">
-        <img src="images/user.png" alt="">
+        <img src="{{main_url}}{{c_user.picture}}" alt="">
         <div class="text">
-            <p>Radwan Gaber</p>
-            <p>radwangaber@gmail.com</p>
-            <a href="#">تسجيل الخروج</a>
+            <p>{{c_user.full_name}}</p>
+            <p>{{c_user.email}}</p>
+            <a href="{% url 'logout' %}">تسجيل الخروج</a>
         </div>
     </div>
  
 
     <div class="overlay">
         <p class="cancel">X</p>
-        <img src="images/user.png" alt="">
+        <img src="" alt="">
     </div>
 
     <div class="container">
         <div class="btns">
-            <a href="#" data-tabid="orders" >جميع الاوردرات</a>
+            <a href="#" data-tabid="orders" >جميع الاوردرات : {{orders.count}}</a>
             <a href="#" data-tabid="order" class="active">اطلب الاوردر</a>
         </div>
 
-        <div class="tab" id="order">
+        <form class="tab" id="order" method="POST">
+            {% csrf_token %}
             <select name="cafateria" id="">
                 <option value="#" selected>اختر الكافتريا</option>
+                {% for cafateria in cafaterias %}
+                    <option value="{{cafateria.id}}">{{cafateria.name}}</option>
+                {% endfor %}
             </select>
             
             <select name="product" id="">
                 <option value="#">اختر الطلب</option>
+                {% for product in products %}
+                    <option value="{{product.id}}">{{product.text}}</option>
+                {% endfor %}
             </select>
     
-            <button >أطلب الان</button>
-        </div>
+            <button type="submit">أطلب الان</button>
+        </form>
 
         <div class="tab" id="orders">
             
-            <div class="or">
-                <button data-qrpath="images/bg.png">عرض الكود</button>
-                <div class="details">
-                    <p>الكافتيريا : علوم</p>
-                    <p>السعر : 30 ج</p>
-                    <p>الطلب : كريب بطاطس </p>
+            {% for order in orders.orders %}
+                <div class="or">
+                    <button data-qrpath="{{main_url}}{{order.qr_path}}">عرض الكود</button>
+                    <div class="details">
+                        <p>الكافتيريا : {{order.cafateria}}</p>
+                        <p>السعر : {{order.price}} ج</p>
+                        <p>الطلب : {{order.order_text}} </p>
+                    </div>
                 </div>
-            </div>
-
-                        
-            <div class="or">
-                <button data-qrpath="images/user.png">عرض الكود</button>
-                <div class="details">
-                    <p>الكافتيريا : علوم</p>
-                    <p>السعر : 30 ج</p>
-                    <p>الطلب : كريب بطاطس </p>
-                </div>
-            </div>
+            {% endfor %}
             
         </div>
 
@@ -82,7 +86,6 @@
                 var img_path = b.dataset.qrpath;
                 overlay.classList.add('view');
                 overlay.querySelector('img').src = img_path;
-                console.log(b)
             })
         })
 
